@@ -2,12 +2,15 @@
 #include "Engine/GameObject.h"
 
 //テストシーンを管理するクラス
-class TestScene : public GameObject
+class PlayScene : public GameObject
 {
+private:
+	XMFLOAT3 CamPosition_;
+	XMFLOAT3 CamTarget_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	TestScene(GameObject* parent);
+	PlayScene(GameObject* parent);
 
 	//初期化
 	void Initialize() override;
