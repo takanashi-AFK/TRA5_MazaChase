@@ -2,14 +2,14 @@
 #include "Engine/GameObject.h"
 
 //テストシーンを管理するクラス
-class Enemy : public GameObject
+class Player : public GameObject
 {
 	int hModel_;
-	Transform EnemyTrans_;
+	Transform PlayerTrans_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	Enemy(GameObject* parent);
+	Player(GameObject* parent);
 
 	//初期化
 	void Initialize() override;

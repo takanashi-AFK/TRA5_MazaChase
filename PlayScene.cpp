@@ -1,5 +1,5 @@
 #include "PlayScene.h"
-#include "Enemy.h"
+#include "Player.h"
 
 #include "Engine/Camera.h"
 
@@ -12,7 +12,7 @@ PlayScene::PlayScene(GameObject * parent)
 //‰Šú‰»
 void PlayScene::Initialize()
 {
-	Instantiate<Enemy>(this);
+	Instantiate<Player>(this);
 
 	CamTarget_ = { 0,1.5,0 };
 	CamPosition_ = { 0,1.5,-5 };
