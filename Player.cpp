@@ -12,9 +12,11 @@ Player::Player(GameObject* parent)
 //初期化
 void Player::Initialize()
 {
+    //モデルデータのロード
     hModel_ = Model::Load("F_Player(move).fbx");
     assert(hModel_ >= 0);
 
+    //アニメーション動作処理
     Model::SetAnimFrame(hModel_, 0, 60, 1);
 }
 
