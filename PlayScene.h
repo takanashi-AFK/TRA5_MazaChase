@@ -1,12 +1,10 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-//テストシーンを管理するクラス
+
 class PlayScene : public GameObject
 {
 private:
-	XMFLOAT3 CamPosition_;
-	XMFLOAT3 CamTarget_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

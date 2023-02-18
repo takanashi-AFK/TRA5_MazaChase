@@ -151,6 +151,8 @@
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="StageMap.cpp" />
+    <ClCompile Include="TestMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
@@ -179,6 +181,8 @@
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="StageMap.h" />
+    <ClInclude Include="TestMap.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

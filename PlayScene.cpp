@@ -1,6 +1,7 @@
 #include "PlayScene.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "TestMap.h"
 #include "Engine/Camera.h"
 
 //コンストラクタ
@@ -12,12 +13,8 @@ PlayScene::PlayScene(GameObject * parent)
 //初期化
 void PlayScene::Initialize()
 {
+	Instantiate<TestMap>(this);
 	Instantiate<Player>(this);
-
-	CamTarget_ = { 0,1.5,0 };
-	CamPosition_ = { 0,1.5,-5 };
-	Camera::SetTarget(CamTarget_);
-	Camera::SetPosition(CamPosition_);
 
 }
 

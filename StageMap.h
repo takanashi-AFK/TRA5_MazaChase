@@ -2,14 +2,15 @@
 #include "Engine/GameObject.h"
 
 
-class Enemy : public GameObject
+class StageMap : public GameObject
 {
-	int hModel_;
-	Transform EnemyTrans_;
+	//CsvReader CsvMap_[1];
+	int Width;//横幅を格納
+	int Height;//縦幅を格納
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	Enemy(GameObject* parent);
+	StageMap(GameObject* parent);
 
 	//初期化
 	void Initialize() override;

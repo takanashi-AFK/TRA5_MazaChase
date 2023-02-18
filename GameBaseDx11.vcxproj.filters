@@ -98,6 +98,8 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="StageMap.cpp" />
+    <ClCompile Include="TestMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -172,6 +174,8 @@
     </ClInclude>
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="StageMap.h" />
+    <ClInclude Include="TestMap.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

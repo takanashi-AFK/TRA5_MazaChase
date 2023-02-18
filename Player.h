@@ -1,11 +1,14 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-//テストシーンを管理するクラス
+
 class Player : public GameObject
 {
 	int hModel_;
 	Transform PlayerTrans_;
+
+	XMFLOAT3 CamPosition_;
+	XMFLOAT3 CamTarget_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

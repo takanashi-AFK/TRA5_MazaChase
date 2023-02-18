@@ -2,6 +2,8 @@
 
 #include "Engine/Input.h"
 #include "Engine/Model.h"
+#include "Engine/Debug.h"
+#include "Engine/Camera.h"
 
 //コンストラクタ
 Player::Player(GameObject* parent)
@@ -28,14 +30,11 @@ void Player::Update()
 //───────────────────────────────────────
 
     /*＝＝＝向いている方向の操作・更新＝＝＝*/
-     //「←」キー：左方向に回転
-    if (Input::IsKey(DIK_LEFT)) {
-        PlayerTrans_.rotate_.y -= 2.0f;
-    }
-    //「→」キー：右方向に回転
-    if (Input::IsKey(DIK_RIGHT)) {
-        PlayerTrans_.rotate_.y += 2.0f;
-    }
+
+
+    //マウスの移動量を取得
+    XMFLOAT3 MousePos_ = Input::GetMouseMove();
+    PlayerTrans_.rotate_.y += (MousePos_.x / 10.0f);
 
     /*＝＝＝＝ 前後左右の移動・更新 ＝＝＝＝*/
 
@@ -60,30 +59,43 @@ void Player::Update()
     //「W」キー：前に進む
     if (Input::IsKey(DIK_W)) {
         vPosition += vMoveZ;
-        //現在地をベクトルからいつものtransform.position_にもどす
         XMStoreFloat3(&PlayerTrans_.position_, vPosition);
     }
 
     //「S」キー：後ろに進む
     if (Input::IsKey(DIK_S)) {
         vPosition -= vMoveZ;
-        //現在地をベクトルからいつものtransform.position_にもどす
         XMStoreFloat3(&PlayerTrans_.position_, vPosition);
     }
 
     //「A」キー：左に進む
     if (Input::IsKey(DIK_A)) {
         vPosition -= vMoveX;
-        //現在地をベクトルからいつものtransform.position_にもどす
         XMStoreFloat3(&PlayerTrans_.position_, vPosition);
     }
 
     //「D」キー：右に進む
     if (Input::IsKey(DIK_D)) {
         vPosition += vMoveX;
-        //現在地をベクトルからいつものtransform.position_にもどす
         XMStoreFloat3(&PlayerTrans_.position_, vPosition);
     }
+
+//───────────────────────────────────────
+//  カメラの移動処理
+//───────────────────────────────────────
+
+   //カメラの位置をplayerの位置にセット
+    /*XMVECTOR FPup = { 0.0f,1.0f,0.0f };
+    XMStoreFloat3(&CamPosition_, vPosition + FPup);*/
+
+    //カメラの焦点をplayerの目先にセット
+    //XMStoreFloat3(&CamTarget_, vPosition + (/*ここに何入れる？*/) + FPup);
+
+    //CamTarget_ = {10,1,10};
+    CamTarget_ = {PlayerTrans_.position_};
+    CamPosition_ = { 10,10,-10 };
+    Camera::SetPosition(CamPosition_);
+    Camera::SetTarget(CamTarget_);
 }
 
 //描画
