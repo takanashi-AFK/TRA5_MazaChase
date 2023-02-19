@@ -15,7 +15,6 @@ void PlayScene::Initialize()
 {
 	Instantiate<StageMap>(this);
 	Instantiate<Player>(this);
-
 }
 
 //XV

@@ -11,9 +11,7 @@ StageMap::StageMap(GameObject* parent)
 //───────────────────────────────────────
 	//CSVデータをロードする
 	//for (int i = 0; i < CSVMAX; i++){
-		CsvMap_.Load("Map.csv");
-	
-	
+	CsvMap_.Load("Map.csv");
 	//テーブルの配列の大きさを把握
 	Width = CsvMap_.GetWidth();//CSVの横幅を取得
 	Height = CsvMap_.GetHeight();//CSVの縦幅を取得
@@ -54,7 +52,6 @@ void StageMap::Update()
 //描画
 void StageMap::Draw()
 {
-	
 }
 
 //開放

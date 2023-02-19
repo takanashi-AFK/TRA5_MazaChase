@@ -98,6 +98,7 @@ void Player::Update()
     case CAM_FPS:	CamSet_FPS();	break;
     }
 
+
     Camera::SetPosition(CamPosition_);
     Camera::SetTarget(CamTarget_);
 }
