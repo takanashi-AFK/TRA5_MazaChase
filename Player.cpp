@@ -89,10 +89,7 @@ void Player::Update()
 
     //カメラを変更する
     if (Input::IsKeyDown(DIK_F4)) {
-        if (CamType_ < (CAM_MAX - 1))
-            CamType_++;
-        else
-            CamType_ = 0;
+        CamChange();
     }
 
     switch (CamType_)
@@ -117,7 +114,16 @@ void Player::Release()
 {
 }
 
-//視点を変更する関数：一人称
+//視点を変更する関数
+void Player::CamChange()
+{
+    if (CamType_ < (CAM_MAX - 1))
+        CamType_++;
+    else
+        CamType_ = 0;
+}
+
+//視点を設定する関数：一人称
 void Player::CamSet_FPS()
 {
     //カメラの位置をplayerの位置にセット
@@ -127,7 +133,7 @@ void Player::CamSet_FPS()
     XMStoreFloat3(&CamTarget_, vPosition_ + vMoveZ_ + FPup);
 }
 
-//視点を変更する関数：固定位置からの追従
+//視点を設定する関数：固定位置からの追従
 void Player::CamSet_FIXED()
 {
     CamTarget_ = {PlayerTrans_.position_};
