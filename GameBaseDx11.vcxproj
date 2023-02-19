@@ -152,7 +152,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="StageMap.cpp" />
-    <ClCompile Include="TestMap.cpp" />
+    <ClCompile Include="StageObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
@@ -182,7 +182,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="StageMap.h" />
-    <ClInclude Include="TestMap.h" />
+    <ClInclude Include="StageObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

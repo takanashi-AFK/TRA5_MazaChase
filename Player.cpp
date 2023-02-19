@@ -17,6 +17,7 @@ void Player::Initialize()
     //モデルデータのロード
     hModel_ = Model::Load("F_Player(move).fbx");
     assert(hModel_ >= 0);
+    PlayerTrans_.position_ = { 10.0f,0.0f,10.0f };
 
     //アニメーション動作処理
     Model::SetAnimFrame(hModel_, 0, 60, 1);
@@ -33,8 +34,8 @@ void Player::Update()
 
 
     //マウスの移動量を取得
-    XMFLOAT3 MousePos_ = Input::GetMouseMove();
-    PlayerTrans_.rotate_.y += (MousePos_.x / 10.0f);
+    XMFLOAT3 MouseMove_ = Input::GetMouseMove();
+    PlayerTrans_.rotate_.y += (MouseMove_.x / 10.0f);
 
     /*＝＝＝＝ 前後左右の移動・更新 ＝＝＝＝*/
 
@@ -44,10 +45,11 @@ void Player::Update()
     XMVECTOR vPosition = XMLoadFloat3(&PlayerTrans_.position_);
 
     //原点からZに垂直なベクトルを作成
-    XMVECTOR vMoveZ = { 0.0f,0.0f,0.05f,0.0f };//{x,y,z,0}
+    XMVECTOR vMoveZ = { 0.0f,0.0f,0.1f,0.0f };//{x,y,z,0}
 
     //原点からXに垂直なベクトルを作成
-    XMVECTOR vMoveX = { 0.05f,0.0f,0.0f,0.0f };//{x,y,z,0}
+    XMVECTOR vMoveX = { 0.1f,0.0f,0.0f,0.0f };//{x,y,z,0}
+
 
     //transform_.rotate_.y度回転させる行列を作成
     XMMATRIX RotateMatY = XMMatrixRotationY(XMConvertToRadians(PlayerTrans_.rotate_.y));
@@ -85,15 +87,16 @@ void Player::Update()
 //───────────────────────────────────────
 
    //カメラの位置をplayerの位置にセット
-    /*XMVECTOR FPup = { 0.0f,1.0f,0.0f };
-    XMStoreFloat3(&CamPosition_, vPosition + FPup);*/
-
+    XMVECTOR FPup = { 0.0f,1.0f,0.0f };
+    XMStoreFloat3(&CamPosition_, vPosition + FPup);
     //カメラの焦点をplayerの目先にセット
-    //XMStoreFloat3(&CamTarget_, vPosition + (/*ここに何入れる？*/) + FPup);
+    XMStoreFloat3(&CamTarget_, vPosition + vMoveZ + FPup);
 
-    //CamTarget_ = {10,1,10};
-    CamTarget_ = {PlayerTrans_.position_};
-    CamPosition_ = { 10,10,-10 };
+
+    //デバック用
+    //CamTarget_ = {PlayerTrans_.position_};
+    //CamPosition_ = { 10,10,-10 };
+
     Camera::SetPosition(CamPosition_);
     Camera::SetTarget(CamTarget_);
 }

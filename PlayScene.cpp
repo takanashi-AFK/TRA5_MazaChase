@@ -1,7 +1,7 @@
 #include "PlayScene.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "TestMap.h"
+#include "StageMap.h"
 #include "Engine/Camera.h"
 
 //コンストラクタ
@@ -13,7 +13,7 @@ PlayScene::PlayScene(GameObject * parent)
 //初期化
 void PlayScene::Initialize()
 {
-	Instantiate<TestMap>(this);
+	Instantiate<StageMap>(this);
 	Instantiate<Player>(this);
 
 }

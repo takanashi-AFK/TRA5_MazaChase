@@ -1,17 +1,22 @@
 #pragma once
 #include "Engine/GameObject.h"
-#include "Engine/CsvReader.h"
 
-class StageMap : public GameObject
+
+enum {
+	OBJ_FLOOR,
+	OBJ_WALL,
+	OBJ_MAX,
+};
+
+//テストシーンを管理するクラス
+class StageObject : public GameObject
 {
-	CsvReader CsvMap_;
-	int Width;//横幅を格納
-	int Height;//縦幅を格納
-	int** table_;
+	int hModel_[OBJ_MAX];
+	int obj_ = 0;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	StageMap(GameObject* parent);
+	StageObject(GameObject* parent);
 
 	//初期化
 	void Initialize() override;
@@ -24,4 +29,7 @@ public:
 
 	//開放
 	void Release() override;
+
+	//配置するobjectを変更する関数
+	void ObjectSet(int _obj) { obj_ = _obj; }
 };
