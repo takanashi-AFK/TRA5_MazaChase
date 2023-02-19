@@ -7,7 +7,7 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    : GameObject(parent, "Player"), hModel_(-1), PlayerTrans_(transform_)
+    : GameObject(parent, "Player"), hModel_(-1), PlayerTrans_(transform_),CamType_(0)
 {
 }
 
@@ -42,60 +42,64 @@ void Player::Update()
     //向いている方向を取得
 
     //原点の位置とPlayerの位置二つを結んだベクトルを作成
-    XMVECTOR vPosition = XMLoadFloat3(&PlayerTrans_.position_);
+    vPosition_ = XMLoadFloat3(&PlayerTrans_.position_);
 
+    float Spped = 0.1f;
     //原点からZに垂直なベクトルを作成
-    XMVECTOR vMoveZ = { 0.0f,0.0f,0.1f,0.0f };//{x,y,z,0}
+    vMoveZ_ = { 0.0f,0.0f,Spped,0.0f };//{x,y,z,0}
 
     //原点からXに垂直なベクトルを作成
-    XMVECTOR vMoveX = { 0.1f,0.0f,0.0f,0.0f };//{x,y,z,0}
+    vMoveX_ = { Spped,0.0f,0.0f,0.0f };//{x,y,z,0}
 
 
     //transform_.rotate_.y度回転させる行列を作成
     XMMATRIX RotateMatY = XMMatrixRotationY(XMConvertToRadians(PlayerTrans_.rotate_.y));
 
     // vMoveZ / vMoveX をRotateMatYで回転させる
-    vMoveZ = XMVector3TransformCoord(vMoveZ, RotateMatY);
-    vMoveX = XMVector3TransformCoord(vMoveX, RotateMatY);
+    vMoveZ_ = XMVector3TransformCoord(vMoveZ_, RotateMatY);
+    vMoveX_ = XMVector3TransformCoord(vMoveX_, RotateMatY);
 
     //「W」キー：前に進む
     if (Input::IsKey(DIK_W)) {
-        vPosition += vMoveZ;
-        XMStoreFloat3(&PlayerTrans_.position_, vPosition);
+        vPosition_ += vMoveZ_;
+        XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
     }
 
     //「S」キー：後ろに進む
     if (Input::IsKey(DIK_S)) {
-        vPosition -= vMoveZ;
-        XMStoreFloat3(&PlayerTrans_.position_, vPosition);
+        vPosition_ -= vMoveZ_;
+        XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
     }
 
     //「A」キー：左に進む
     if (Input::IsKey(DIK_A)) {
-        vPosition -= vMoveX;
-        XMStoreFloat3(&PlayerTrans_.position_, vPosition);
+        vPosition_ -= vMoveX_;
+        XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
     }
 
     //「D」キー：右に進む
     if (Input::IsKey(DIK_D)) {
-        vPosition += vMoveX;
-        XMStoreFloat3(&PlayerTrans_.position_, vPosition);
+        vPosition_ += vMoveX_;
+        XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
     }
 
 //───────────────────────────────────────
 //  カメラの移動処理
 //───────────────────────────────────────
 
-   //カメラの位置をplayerの位置にセット
-    XMVECTOR FPup = { 0.0f,1.0f,0.0f };
-    XMStoreFloat3(&CamPosition_, vPosition + FPup);
-    //カメラの焦点をplayerの目先にセット
-    XMStoreFloat3(&CamTarget_, vPosition + vMoveZ + FPup);
+    //カメラを変更する
+    if (Input::IsKeyDown(DIK_F4)) {
+        if (CamType_ < (CAM_MAX - 1))
+            CamType_++;
+        else
+            CamType_ = 0;
+    }
 
-
-    //デバック用
-    //CamTarget_ = {PlayerTrans_.position_};
-    //CamPosition_ = { 10,10,-10 };
+    switch (CamType_)
+    {
+    case CAM_FIXED:	CamSet_FIXED();	break;
+    case CAM_FPS:	CamSet_FPS();	break;
+    }
 
     Camera::SetPosition(CamPosition_);
     Camera::SetTarget(CamTarget_);
@@ -111,4 +115,21 @@ void Player::Draw()
 //開放
 void Player::Release()
 {
+}
+
+//視点を変更する関数：一人称
+void Player::CamSet_FPS()
+{
+    //カメラの位置をplayerの位置にセット
+    XMVECTOR FPup = { 0.0f,1.0f,0.0f };
+    XMStoreFloat3(&CamPosition_, vPosition_ + FPup);
+    //カメラの焦点をplayerの目先にセット
+    XMStoreFloat3(&CamTarget_, vPosition_ + vMoveZ_ + FPup);
+}
+
+//視点を変更する関数：固定位置からの追従
+void Player::CamSet_FIXED()
+{
+    CamTarget_ = {PlayerTrans_.position_};
+    CamPosition_ = { 10,10,-10 };
 }
