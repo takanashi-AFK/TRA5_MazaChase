@@ -8,11 +8,10 @@ enum {
 	OBJ_MAX,
 };
 
-//テストシーンを管理するクラス
 class StageObject : public GameObject
 {
-	int hModel_[OBJ_MAX];
-	int obj_ = 0;
+	int hModel_[OBJ_MAX];	//モデル番号
+	int obj_;				//オブジェクト番号
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

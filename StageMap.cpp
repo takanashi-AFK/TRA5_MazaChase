@@ -29,6 +29,7 @@ StageMap::StageMap(GameObject* parent)
 //初期化
 void StageMap::Initialize()
 {
+
 	for (int x = 0; x < Width; x++)
 		for (int z = 0; z < Height; z++) {
 			if (table_[x][z] == 0) {
@@ -57,4 +58,20 @@ void StageMap::Draw()
 //開放
 void StageMap::Release()
 {
+	//newで作ったものは消す！
+	for (int x = 0; x < Width; x++)
+	{
+		delete[] table_[x];
+	}
+	delete[] table_;
 }
+
+/*
+2023/02/20～現在
+なぜか重くなるため解決策思考中
+多分原因はInstantateのしすぎ
+実体の数が多すぎるのかな
+
+だから、WallやFloorなどのステージ構成オブジェクトは描画で
+書くべきなのかな。。でもステージマップクラス作るならその中で完結させたいよね
+*/

@@ -1,15 +1,13 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-
-class Enemy : public GameObject
+class Wall : public GameObject
 {
-	int hModel_;			//モデル番号
-	Transform EnemyTrans_;	//enemyのtransformを格納する
+	int hModel_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	Enemy(GameObject* parent);
+	Wall(GameObject* parent);
 
 	//初期化
 	void Initialize() override;

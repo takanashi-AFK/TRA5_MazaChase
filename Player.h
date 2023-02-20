@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-enum CAM {
+enum {
 	CAM_FIXED,
 	CAM_FPS,
 	CAM_MAX,
@@ -9,16 +9,17 @@ enum CAM {
 
 class Player : public GameObject
 {
-	int hModel_;
-	int CamType_;
-	Transform PlayerTrans_;
+	int hModel_;	//モデル番号
+	int CamType_;	//カメラ番号
+	
+	Transform	PlayerTrans_;	//playerのtransformを格納する
 
-	XMFLOAT3 CamPosition_;
-	XMFLOAT3 CamTarget_;
+	XMFLOAT3	CamPosition_;	//カメラの位置を格納する
+	XMFLOAT3	CamTarget_;		//カメラの焦点を格納する
 
-	XMVECTOR vPosition_;
-	XMVECTOR vMoveZ_;
-	XMVECTOR vMoveX_;
+	XMVECTOR	vPosition_;		//playerのpositionをvector型として格納する
+	XMVECTOR	vMoveZ_;		//空方向（Ｚ軸）
+	XMVECTOR	vMoveX_;		//空方向（Ｘ軸）
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

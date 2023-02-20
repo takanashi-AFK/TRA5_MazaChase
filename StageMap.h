@@ -4,10 +4,10 @@
 
 class StageMap : public GameObject
 {
-	CsvReader CsvMap_;
-	int Width;//横幅を格納
-	int Height;//縦幅を格納
-	int** table_;
+	CsvReader CsvMap_;	//CSVデータを格納
+	int Width;			//CSVから読み取った横幅を格納
+	int Height;			//CSVから読み取った縦幅を格納
+	int** table_;		//ステージ情報を格納
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
