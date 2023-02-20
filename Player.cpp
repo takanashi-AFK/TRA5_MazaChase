@@ -17,6 +17,8 @@ void Player::Initialize()
     //モデルデータのロード
     hModel_ = Model::Load("F_Player(move).fbx");
     assert(hModel_ >= 0);
+
+    //初期位置の設定
     PlayerTrans_.position_ = { 10.0f,0.0f,10.0f };
 
     //アニメーション動作処理

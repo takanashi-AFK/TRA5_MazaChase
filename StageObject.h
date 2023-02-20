@@ -31,4 +31,7 @@ public:
 
 	//配置するobjectを変更する関数
 	void ObjectSet(int _obj) { obj_ = _obj; }
+
+	//任意のゲームオブジェクトに「何メートル先でぶつかるか」を求める関数
+	int GetModelHandle(int _obj);
 };

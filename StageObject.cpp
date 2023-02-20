@@ -37,3 +37,8 @@ void StageObject::Draw()
 void StageObject::Release()
 {
 }
+
+int StageObject::GetModelHandle(int _obj)
+{
+	return (hModel_[_obj]);
+}
