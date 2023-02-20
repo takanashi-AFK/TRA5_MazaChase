@@ -53,7 +53,6 @@ void Player::Update()
     //原点からXに垂直なベクトルを作成
     vMoveX_ = { Spped,0.0f,0.0f,0.0f };//{x,y,z,0}
 
-
     //transform_.rotate_.y度回転させる行列を作成
     XMMATRIX RotateMatY = XMMatrixRotationY(XMConvertToRadians(PlayerTrans_.rotate_.y));
 
@@ -90,16 +89,13 @@ void Player::Update()
 //───────────────────────────────────────
 
     //カメラを変更する
-    if (Input::IsKeyDown(DIK_F4)) {
-        CamChange();
-    }
+    if (Input::IsKeyDown(DIK_F4)) { CamChange(); }
 
     switch (CamType_)
     {
     case CAM_FIXED:	CamSet_FIXED();	break;
     case CAM_FPS:	CamSet_FPS();	break;
     }
-
 
     Camera::SetPosition(CamPosition_);
     Camera::SetTarget(CamTarget_);

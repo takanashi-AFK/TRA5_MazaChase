@@ -17,7 +17,8 @@ void Enemy::Initialize()
 
 	//初期位置の設定
 	EnemyTrans_.position_ = { 10.0f,0.0f,13.0f };
-
+	EnemyTrans_.scale_ = { 0.8f,0.8f,0.8f };
+	EnemyTrans_.rotate_.y = 180;
 	Model::SetAnimFrame(hModel_, 0, 60, 1);
 }
 
@@ -54,6 +55,34 @@ void Enemy::Update()
 		Model::RayCast(WallModel, &DoM_Left);
 		Model::RayCast(WallModel, &DoM_Right);
 		Model::RayCast(WallModel, &DoM_Back);
+
+		bool DomRight;
+		bool DomLeft;
+		bool DomBack;
+
+		//当たったら
+		if (DoM_Right.hit) {
+			//フラグ立ててこの方向の選択肢をfalseにする
+			DomRight = false;
+		}
+		//当たったら
+		if (DoM_Left.hit) {
+			//フラグ立ててこの方向の選択肢をfalseにする
+			DomLeft = false;
+		}
+		//当たったら
+		if (DoM_Back.hit) {
+			//フラグ立ててこの方向の選択肢をfalseにする
+			DomBack = false;
+		}
+
+
+		
+
+		//進行方向を取得
+
+		//取得した方向に進む
+
 	}
 	else 
 	{
@@ -83,3 +112,14 @@ void Enemy::Draw()
 void Enemy::Release()
 {
 }
+
+//１方向当たった時の処理
+		// 右だけ
+		// 左だけ
+		// 後ろだけ
+		//２方向当たった時の処理
+		// 右と左
+		// 右と後ろ
+		// 左と後ろ
+		//３方向当たった時の処理
+		// 右と左と後ろ
