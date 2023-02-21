@@ -46,12 +46,12 @@ void Player::Update()
     //原点の位置とPlayerの位置二つを結んだベクトルを作成
     vPosition_ = XMLoadFloat3(&PlayerTrans_.position_);
 
-    float Spped = 0.1f;
+    float Speed = 0.1f;
     //原点からZに垂直なベクトルを作成
-    vMoveZ_ = { 0.0f,0.0f,Spped,0.0f };//{x,y,z,0}
+    vMoveZ_ = { 0.0f,0.0f,Speed,0.0f };//{x,y,z,0}
 
     //原点からXに垂直なベクトルを作成
-    vMoveX_ = { Spped,0.0f,0.0f,0.0f };//{x,y,z,0}
+    vMoveX_ = { Speed,0.0f,0.0f,0.0f };//{x,y,z,0}
 
     //transform_.rotate_.y度回転させる行列を作成
     XMMATRIX RotateMatY = XMMatrixRotationY(XMConvertToRadians(PlayerTrans_.rotate_.y));

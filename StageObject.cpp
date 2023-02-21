@@ -11,7 +11,7 @@ StageObject::StageObject(GameObject* parent)
 void StageObject::Initialize()
 {
 	//ファイルネームを入れる配列
-	const char* fileName[] = { "F_Floor.fbx","F_Wall.fbx" };
+	const char* fileName[] = { "Floor.fbx","Wall.fbx" };
 
 	for (int i = 0; i < OBJ_MAX; i++)
 	{
@@ -19,6 +19,7 @@ void StageObject::Initialize()
 		hModel_[i] = Model::Load(fileName[i]);
 		assert(hModel_[i] >= 0);
 	}
+	transform_.scale_ = { 2,2,2 };
 }
 
 //更新

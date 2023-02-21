@@ -29,7 +29,6 @@ StageMap::StageMap(GameObject* parent)
 //‰Šú‰»
 void StageMap::Initialize()
 {
-
 	for (int x = 0; x < Width; x++)
 		for (int z = 0; z < Height; z++) {
 			if (table_[x][z] == 0) {
