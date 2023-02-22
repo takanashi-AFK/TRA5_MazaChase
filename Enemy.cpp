@@ -29,6 +29,7 @@ void Enemy::Update()
 //  キャラクターの移動処理
 //───────────────────────────────────────
 
+
 	//レイキャスト(ビーム)を正面から飛ばす
 	StageObject* Wall = (StageObject*)FindObject("StageObject");
 	int WallModel = Wall->GetModelHandle(OBJ_WALL);
@@ -42,6 +43,7 @@ void Enemy::Update()
 	RayCastData DoM_Right; //進行方向（Direction of Movement）
 	RayCastData DoM_Left; //進行方向（Direction of Movement）
 	RayCastData DoM_Back; //進行方向（Direction of Movement）
+
 
 	//Visionが当たったら
 	if (Vision.hit) {

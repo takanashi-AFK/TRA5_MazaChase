@@ -239,6 +239,8 @@ void GameObject::Collision(GameObject * pTarget)
 		return;
 	}
 
+
+
 	//自分とpTargetのコリジョン情報を使って当たり判定
 	//1つのオブジェクトが複数のコリジョン情報を持ってる場合もあるので二重ループ
 	for (auto i : colliderList_)
