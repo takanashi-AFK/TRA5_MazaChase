@@ -11,7 +11,7 @@ StageObject::StageObject(GameObject* parent)
 void StageObject::Initialize()
 {
 	//ファイルネームを入れる配列
-	const char* fileName[] = { "ita.fbx","kabe.fbx" };
+	const char* fileName[] = { "Floor.fbx","Wall.fbx" };
 
 
 	for (int i = 0; i < OBJ_MAX; i++)
@@ -20,7 +20,7 @@ void StageObject::Initialize()
 		hModel_[i] = Model::Load(fileName[i]);
 		assert(hModel_[i] >= 0);
 	}
-	//transform_.scale_ = { 2,2,2 };
+	transform_.scale_ = { 2,2,2 };
 }
 
 //更新
@@ -40,6 +40,13 @@ void StageObject::Release()
 {
 }
 
+//配置するobjectを変更する関数
+void StageObject::ObjectSet(int _obj)
+{
+	obj_ = _obj;
+}
+
+//任意のゲームオブジェクトに「何メートル先でぶつかるか」を求める関数
 int StageObject::GetModelHandle(int _obj)
 {
 	return (hModel_[_obj]);

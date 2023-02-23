@@ -1,13 +1,16 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "Engine/CsvReader.h"
+#include <vector>
+using std::vector;
 
 class StageMap : public GameObject
 {
 	CsvReader CsvMap_;	//CSVデータを格納
 	int Width;			//CSVから読み取った横幅を格納
 	int Height;			//CSVから読み取った縦幅を格納
-	int** table_;		//ステージ情報を格納
+	vector<vector<int>> Table_;//ステージ情報を格納する二次元配列
+
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

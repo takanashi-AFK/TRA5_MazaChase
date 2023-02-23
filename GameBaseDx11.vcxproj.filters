@@ -24,6 +24,9 @@
       <UniqueIdentifier>{47a6a3f5-8cfd-436b-8d58-beccd108f3f3}</UniqueIdentifier>
       <Extensions>hlsl</Extensions>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{a24c2546-cc87-414b-87b6-0de37e2dc92d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\BoxCollider.cpp">
@@ -80,7 +83,6 @@
     <ClCompile Include="Engine\Transform.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Engine\Audio.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
@@ -100,6 +102,9 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StageMap.cpp" />
     <ClCompile Include="StageObject.cpp" />
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -156,7 +161,6 @@
     <ClInclude Include="Engine\Transform.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Engine\Audio.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
@@ -176,6 +180,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="StageMap.h" />
     <ClInclude Include="StageObject.h" />
+    <ClInclude Include="PlayScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
