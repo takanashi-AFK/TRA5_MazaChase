@@ -20,7 +20,7 @@ void PlayScene::Initialize()
 	Time_ = Instantiate<Timer>(this);
 	Time_->DrawPostion(30, 30);	//描画する位置を指定
 	Time_->UseThis(T_TIMER);//(State_)を使う
-	Time_->SetLimit(60);			//制限時間を設定(秒)
+	Time_->SetLimit(6);			//制限時間を設定(秒)
 	ReadyTimer_ = (3 * FPS);//(秒 * フレームレート)
 }
 
@@ -29,16 +29,15 @@ void PlayScene::Update()
 {
 	switch (state_)
 	{
-	case S_READY:		UpdateReady();		break;
-	case S_PLAY:			UpdatePlay();		break;
-	case S_GAMEOVER:		UpdateGameOver();	break;
+	case S_READY:		UpdateReady();	break;
+	case S_PLAY:		UpdatePlay();	break;
+	case S_GAMEOVER:	UpdateClear();	break;
 	}
 }
 
 //更新：準備
 void PlayScene::UpdateReady()
 {
-
 	if (ReadyTimer_ > 0) {
 		ReadyTimer_--;
 		if (ReadyTimer_ == 0) {
@@ -53,6 +52,10 @@ void PlayScene::UpdateReady()
 //更新：プレイ中
 void PlayScene::UpdatePlay()
 {
+	//playerを動ける状態にする
+	Player* P = (Player*)FindObject("Player");
+	P->SetMove(true);
+
 	if (Time_->IsFinished()) {
 		//ステートパターンを変更する
 		state_ = S_GAMEOVER;
@@ -60,8 +63,10 @@ void PlayScene::UpdatePlay()
 }
 
 //更新：終了
-void PlayScene::UpdateGameOver()
+void PlayScene::UpdateClear()
 {
+	SceneManager* Clear = (SceneManager*)FindObject("SceneManager");
+	Clear->ChangeScene(SCENE_ID_CLEAR);
 }
 
 //描画

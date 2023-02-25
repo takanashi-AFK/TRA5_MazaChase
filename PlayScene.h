@@ -2,6 +2,7 @@
 #include "Engine/GameObject.h"
 #include "Engine/Input.h"
 #include "Engine/Camera.h"
+#include "Engine/SceneManager.h"
 
 #include "Player.h"
 #include "Enemy.h"
@@ -41,7 +42,7 @@ public:
 	void UpdatePlay();
 
 	//更新：終了
-	void UpdateGameOver();
+	void UpdateClear();
 
 	//描画
 	void Draw() override;

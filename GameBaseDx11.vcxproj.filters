@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="01Engine">
       <UniqueIdentifier>{e5fccdcb-f299-4448-bdb6-01fa28039576}</UniqueIdentifier>
     </Filter>
@@ -25,7 +21,10 @@
       <Extensions>hlsl</Extensions>
     </Filter>
     <Filter Include="Scene">
-      <UniqueIdentifier>{a24c2546-cc87-414b-87b6-0de37e2dc92d}</UniqueIdentifier>
+      <UniqueIdentifier>{2cd81acc-027c-4743-a679-dd54198cd43f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソースファイル">
+      <UniqueIdentifier>{191c713a-e017-4ec8-b69c-a10547ec2d25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,10 +101,16 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="StageMap.cpp" />
     <ClCompile Include="StageObject.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="PlayScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="OverScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -181,10 +186,16 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="StageMap.h" />
     <ClInclude Include="StageObject.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="PlayScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h" />
+    <ClInclude Include="OverScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

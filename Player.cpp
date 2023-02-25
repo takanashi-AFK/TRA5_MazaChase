@@ -2,7 +2,7 @@
 
 //コンストラクタ
 Player::Player(GameObject* parent)
-    : GameObject(parent, "Player"), hModel_(-1), PlayerTrans_(transform_),CamType_(0)
+    : GameObject(parent, "Player"), hModel_(-1), PlayerTrans_(transform_),CamType_(0),moving_(0)
 {
 }
 
@@ -23,12 +23,48 @@ void Player::Initialize()
 //更新
 void Player::Update()
 {
+    //playerの移動操作
+    if (isMove()) {
+        PlayerMove();
+    }
+//───────────────────────────────────────
+//  カメラの移動処理
+//───────────────────────────────────────
+
+            //カメラを変更する
+    if (Input::IsKeyDown(DIK_F4)) { 
+        CamChange(); 
+    }
+
+    switch (CamType_)
+    {
+    case CAM_FIXED:	CamSet_FIXED();	break;
+    case CAM_FPS:	CamSet_FPS();	break;
+    }
+
+    Camera::SetPosition(CamPosition_);
+    Camera::SetTarget(CamTarget_);
+}
+
+//描画
+void Player::Draw()
+{
+    Model::SetTransform(hModel_, PlayerTrans_);
+    Model::Draw(hModel_);
+}
+
+//開放
+void Player::Release()
+{
+}
+
+void Player::PlayerMove()
+{
 //───────────────────────────────────────
 //  キャラクターの移動処理
 //───────────────────────────────────────
 
     /*＝＝＝向いている方向の操作・更新＝＝＝*/
-
 
     //マウスの移動量を取得
     XMFLOAT3 MouseMove_ = Input::GetMouseMove();
@@ -78,34 +114,6 @@ void Player::Update()
         vPosition_ += vMoveX_;
         XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
     }
-
-//───────────────────────────────────────
-//  カメラの移動処理
-//───────────────────────────────────────
-
-    //カメラを変更する
-    if (Input::IsKeyDown(DIK_F4)) { CamChange(); }
-
-    switch (CamType_)
-    {
-    case CAM_FIXED:	CamSet_FIXED();	break;
-    case CAM_FPS:	CamSet_FPS();	break;
-    }
-
-    Camera::SetPosition(CamPosition_);
-    Camera::SetTarget(CamTarget_);
-}
-
-//描画
-void Player::Draw()
-{
-    Model::SetTransform(hModel_, PlayerTrans_);
-    Model::Draw(hModel_);
-}
-
-//開放
-void Player::Release()
-{
 }
 
 //視点を変更する関数
@@ -116,6 +124,8 @@ void Player::CamChange()
     else
         CamType_ = 0;
 }
+
+
 
 //視点を設定する関数：一人称
 void Player::CamSet_FPS()
@@ -132,4 +142,9 @@ void Player::CamSet_FIXED()
 {
     CamTarget_ = {PlayerTrans_.position_};
     CamPosition_ = { 10,10,-10 };
+}
+
+void Player::SetMove(bool _move)
+{
+    moving_ = _move;
 }
