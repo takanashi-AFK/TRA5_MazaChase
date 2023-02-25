@@ -1,6 +1,4 @@
 #include "StageMap.h"
-#include "StageObject.h"
-
 
 //コンストラクタ
 StageMap::StageMap(GameObject* parent)
@@ -18,7 +16,6 @@ StageMap::StageMap(GameObject* parent)
 
 	//配列をWidth×Heightで初期化
 	Table_.resize(Width, vector<int>(Height, 0));
-
 	for (int x = 0; x < Width; x++)
 		for (int z = 0; z < Height; z++)
 			Table_[x][z] = CsvMap_.GetValue(x, ((Height - 1) - z));

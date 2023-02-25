@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/Input.h"
+#include "Engine/Model.h"
 
+#include "StageObject.h"
 
 class Enemy : public GameObject
 {

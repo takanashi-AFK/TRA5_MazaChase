@@ -1,5 +1,4 @@
 #include "StageObject.h"
-#include "Engine/Model.h"
 
 //コンストラクタ
 StageObject::StageObject(GameObject* parent)
@@ -12,7 +11,6 @@ void StageObject::Initialize()
 {
 	//ファイルネームを入れる配列
 	const char* fileName[] = { "Floor.fbx","Wall.fbx" };
-
 
 	for (int i = 0; i < OBJ_MAX; i++)
 	{

@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
-
+#include "Engine/Model.h"
 
 enum {
 	OBJ_FLOOR,
@@ -30,7 +30,7 @@ public:
 	void Release() override;
 
 	//配置するobjectを変更する関数
-	void ObjectSet(int _obj) { obj_ = _obj; }
+	void ObjectSet(int _obj);
 
 	//任意のゲームオブジェクトに「何メートル先でぶつかるか」を求める関数
 	int GetModelHandle(int _obj);

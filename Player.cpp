@@ -1,10 +1,5 @@
 #include "Player.h"
 
-#include "Engine/Input.h"
-#include "Engine/Model.h"
-#include "Engine/Debug.h"
-#include "Engine/Camera.h"
-
 //コンストラクタ
 Player::Player(GameObject* parent)
     : GameObject(parent, "Player"), hModel_(-1), PlayerTrans_(transform_),CamType_(0)

@@ -1,5 +1,9 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/Input.h"
+#include "Engine/Model.h"
+#include "Engine/Debug.h"
+#include "Engine/Camera.h"
 
 enum {
 	CAM_FIXED,

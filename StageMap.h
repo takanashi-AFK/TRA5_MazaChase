@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "Engine/CsvReader.h"
+
+#include "StageObject.h"
+
 #include <vector>
 using std::vector;
 
