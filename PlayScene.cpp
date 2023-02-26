@@ -20,8 +20,8 @@ void PlayScene::Initialize()
 	Time_ = Instantiate<Timer>(this);
 	Time_->DrawPostion(30, 30);	//描画する位置を指定
 	Time_->UseThis(T_TIMER);//(State_)を使う
-	Time_->SetLimit(6);			//制限時間を設定(秒)
-	ReadyTimer_ = (3 * FPS);//(秒 * フレームレート)
+	Time_->SetLimit(30);			//制限時間を設定(秒)
+	ReadyTimer_ = (5 * FPS);//(秒 * フレームレート)
 }
 
 //更新

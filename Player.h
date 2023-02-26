@@ -6,6 +6,9 @@
 #include "Engine/Camera.h"
 #include "Engine/VFX.h"
 
+#include "StageMap.h"
+
+
 enum {
 	CAM_FIXED,
 	CAM_FPS,
@@ -17,6 +20,7 @@ class Player : public GameObject
 	int hModel_;	//モデル番号
 	int CamType_;	//カメラ番号
 	bool moving_;
+
 	
 	Transform	PlayerTrans_;	//playerのtransformを格納する
 
@@ -42,9 +46,6 @@ public:
 
 	//開放
 	void Release() override;
-
-	//移動処理をする関数
-	void PlayerMove();
 
 	//視点を変更する関数
 	void CamChange();

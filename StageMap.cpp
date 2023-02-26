@@ -26,12 +26,12 @@ void StageMap::Initialize()
 {
 	for (int x = 0; x < Width; x++)
 		for (int z = 0; z < Height; z++) {
-			if (Table_[x][z] == 0) {
+			if (Table_[x][z] == OBJ_FLOOR) {
 				StageObject* FLOOR = Instantiate<StageObject>(GetParent());
 				FLOOR->ObjectSet(OBJ_FLOOR);
 				FLOOR->SetPosition(XMFLOAT3(x*2, 0, z*2));
 			}
-			else if (Table_[x][z] == 1) {
+			else if (Table_[x][z] == OBJ_WALL) {
 				StageObject* WALL = Instantiate<StageObject>(GetParent());
 				WALL->ObjectSet(OBJ_WALL);
 				WALL->SetPosition(XMFLOAT3(x*2, 0, z*2));
