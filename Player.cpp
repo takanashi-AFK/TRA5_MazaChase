@@ -17,7 +17,7 @@ void Player::Initialize()
     assert(HRFrame_ >= 0);
 
     //初期位置の設定
-    PlayerTrans_.position_ = { 10.0f,0.0f,10.0f };
+    PlayerTrans_.position_ = { 3.0f,0.0f,3.0f };
 
     //アニメーション動作処理
     Model::SetAnimFrame(hModel_, 0, 60, 1);
@@ -46,7 +46,7 @@ void Player::Update()
         vPosition_ = XMLoadFloat3(&PlayerTrans_.position_);
 
         //移動速度
-        float Speed = 0.05f;
+        float Speed = 0.09f;
         if (Input::IsKey(DIK_LSHIFT)) { Speed = 0.1f; }
 
         //原点からZに垂直なベクトルを作成
@@ -65,33 +65,36 @@ void Player::Update()
         //「W」キー：前に進む
         if (Input::IsKey(DIK_W)) {
             vPosition_ += vMoveZ_;
-            XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
+            XMVector3Normalize(vMoveZ_);//移動ベクトルを正規化
         }
 
         //「S」キー：後ろに進む
         if (Input::IsKey(DIK_S)) {
             vPosition_ -= vMoveZ_;
-            XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
+            XMVector3Normalize(vMoveZ_);//移動ベクトルを正規化
         }
 
         //「A」キー：左に進む
         if (Input::IsKey(DIK_A)) {
             vPosition_ -= vMoveX_;
-            XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
+            XMVector3Normalize(vMoveX_);//移動ベクトルを正規化
         }
 
         //「D」キー：右に進む
         if (Input::IsKey(DIK_D)) {
             vPosition_ += vMoveX_;
-            XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
+            XMVector3Normalize(vMoveX_);//移動ベクトルを正規化
         }
 
-        //カメラを変更する
-        if (Input::IsKeyDown(DIK_F4)) { CamChange(); }
+        XMVector3Normalize(vPosition_);//移動ベクトルを正規化
+        XMStoreFloat3(&PlayerTrans_.position_, vPosition_);
 
 //───────────────────────────────────────
 //  カメラの移動処理
 //───────────────────────────────────────
+
+    //カメラを変更する
+    if (Input::IsKeyDown(DIK_F4)) { CamChange(); }
 
     switch (CamType_)
     {
@@ -101,87 +104,91 @@ void Player::Update()
 
     Camera::SetPosition(CamPosition_);
     Camera::SetTarget(CamTarget_);
-        
-    //あたり判定の各頂点を構成する要素
-    int CheckX1, CheckZ1;
-    int CheckX2, CheckZ2;
+    
+//───────────────────────────────────────
+//  当たり判定
+//───────────────────────────────────────
 
     //デバック用
-    //Playerが壁と接触しているかを確認する
-    if (pStageMap->isWall(PlayerTrans_.position_.x, PlayerTrans_.position_.z)){
-        Debug::Log("〇",true);}
-    else{
-        Debug::Log("△", true);}
+    //Player(中心)が壁と接触しているかを確認する
+    #if 0
+    {
+        if (pStageMap->isWall(PlayerTrans_.position_.x, PlayerTrans_.position_.z)){
+            Debug::Log("〇",true);}
+        else{
+            Debug::Log("△", true);}
+    
+    }
+    #endif
 
+    //あたり判定の各頂点を構成する要素
+    int checkX1, checkZ1;
+    int checkX2, checkZ2;
 
     //あたり判定の各処理
-    #if 0
+    #if 1
     {
         //右側の判定
         {
             //頂点１を構成
-            CheckX1 = (int)(PlayerTrans_.position_.x + 1.0f);
-            CheckZ1 = (int)(PlayerTrans_.position_.z - 1.0f);
+            checkX1 = (int)(PlayerTrans_.position_.x + 0.2f);
+            checkZ1 = (int)(PlayerTrans_.position_.z + 0.1f);
 
             //頂点２を構成
-            CheckX2 = (int)(PlayerTrans_.position_.x + 1.0f);
-            CheckZ2 = (int)(PlayerTrans_.position_.z + 1.0f);
+            checkX2 = (int)(PlayerTrans_.position_.x + 0.2f);
+            checkZ2 = (int)(PlayerTrans_.position_.z - 0.1f);
 
-            //そこが壁かどうかを判定する
-            if (pStageMap->isWall(CheckX1, CheckZ1) || pStageMap->isWall(CheckX2, CheckZ2))//引数：playerの位置
-            {
-                PlayerTrans_.position_.x = (float)((int)PlayerTrans_.position_.x) + (0.8f - 0.4f);
+            //頂点１,２が壁かどうかを判定する
+            if (pStageMap->isWall(checkX1, checkZ1) || pStageMap->isWall(checkX2, checkZ2)){
+                PlayerTrans_.position_.x = (float)((int)PlayerTrans_.position_.x) + (1.0f - 0.2f);
             }
         }
 
         //左側の判定
         {
             //頂点１を構成
-            CheckX1 = (int)(PlayerTrans_.position_.x - 1.0f);
-            CheckZ1 = (int)(PlayerTrans_.position_.z - 1.0f);
+            checkX1 = (int)(PlayerTrans_.position_.x - 0.2f);
+            checkZ1 = (int)(PlayerTrans_.position_.z + 0.1f);
 
             //頂点２を構成
-            CheckX2 = (int)(PlayerTrans_.position_.x - 1.0f);
-            CheckZ2 = (int)(PlayerTrans_.position_.z + 1.0f);
+            checkX2 = (int)(PlayerTrans_.position_.x - 0.2f);
+            checkZ2 = (int)(PlayerTrans_.position_.z - 0.1f);
 
             //そこが壁かどうかを判定する
-            if (pStageMap->isWall(CheckX1, CheckZ1) || pStageMap->isWall(CheckX2, CheckZ2))//引数：playerの位置
-            {
-                PlayerTrans_.position_.x = (float)((int)PlayerTrans_.position_.x) + 0.4f;
+            if (pStageMap->isWall(checkX1, checkZ1) || pStageMap->isWall(checkX2, checkZ2)){
+                PlayerTrans_.position_.x = (float)((int)PlayerTrans_.position_.x) + 0.2f;
             }
         }
 
         //奥側の判定
         {
             //頂点１を構成
-            CheckX1 = (int)(PlayerTrans_.position_.x + 1.0f);
-            CheckZ1 = (int)(PlayerTrans_.position_.z - 1.0f);
+            checkX1 = (int)(PlayerTrans_.position_.x + 0.1f);
+            checkZ1 = (int)(PlayerTrans_.position_.z + 0.2f);
 
             //頂点２を構成
-            CheckX2 = (int)(PlayerTrans_.position_.x - 1.0f);
-            CheckZ2 = (int)(PlayerTrans_.position_.z - 1.0f);
+            checkX2 = (int)(PlayerTrans_.position_.x - 0.1f);
+            checkZ2 = (int)(PlayerTrans_.position_.z + 0.2f);
 
             //そこが壁かどうかを判定する
-            if (pStageMap->isWall(CheckX1, CheckZ1) || pStageMap->isWall(CheckX2, CheckZ2))//引数：playerの位置
-            {
-                PlayerTrans_.position_.x = (float)((int)PlayerTrans_.position_.x) + (0.8f - 0.4f);
+            if (pStageMap->isWall(checkX1, checkZ1) || pStageMap->isWall(checkX2, checkZ2)){
+                PlayerTrans_.position_.z = (float)((int)PlayerTrans_.position_.z) + (1.0f - 0.2f);
             }
         }
 
         //前側の判定
         {
             //頂点１を構成
-            CheckX1 = (int)(PlayerTrans_.position_.x + 1.0f);
-            CheckZ1 = (int)(PlayerTrans_.position_.z + 1.0f);
+            checkX1 = (int)(PlayerTrans_.position_.x + 0.1f);
+            checkZ1 = (int)(PlayerTrans_.position_.z - 0.2f);
 
             //頂点２を構成
-            CheckX2 = (int)(PlayerTrans_.position_.x - 1.0f);
-            CheckZ2 = (int)(PlayerTrans_.position_.z + 1.0f);
+            checkX2 = (int)(PlayerTrans_.position_.x - 0.1f);
+            checkZ2 = (int)(PlayerTrans_.position_.z - 0.2f);
 
             //そこが壁かどうかを判定する
-            if (pStageMap->isWall(CheckX1, CheckZ1) || pStageMap->isWall(CheckX2, CheckZ2))//引数：playerの位置
-            {
-                PlayerTrans_.position_.x = (float)((int)PlayerTrans_.position_.x) + 0.4;
+            if (pStageMap->isWall(checkX1, checkZ1) || pStageMap->isWall(checkX2, checkZ2)){
+                PlayerTrans_.position_.z = (float)((int)PlayerTrans_.position_.z) + 0.2f;
             }
         }
     }
