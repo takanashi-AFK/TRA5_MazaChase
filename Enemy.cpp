@@ -13,91 +13,62 @@ void Enemy::Initialize()
 	assert(hModel_ >= 0);
 
 	//初期位置の設定
-	EnemyTrans_.position_ = { 10.0f,0.0f,13.0f };
-	EnemyTrans_.scale_ = { 0.8f,0.8f,0.8f };
-	EnemyTrans_.rotate_.y = 180;
-	Model::SetAnimFrame(hModel_, 0, 60, 1);
+	{
+		EnemyTrans_.position_ = { 10.0f,0.0f,13.0f };
+		EnemyTrans_.scale_ = { 0.8f,0.8f,0.8f };
+		EnemyTrans_.rotate_.y = 0;
+		Model::SetAnimFrame(hModel_, 0, 60, 1);
+	}
 }
 
 //更新
 void Enemy::Update()
 {
-//───────────────────────────────────────
-//  キャラクターの移動処理
-//───────────────────────────────────────
+	//playerの位置を取得する
+		Player* p = (Player*)FindObject("Player");
+		TargetPosition_ = p->GetPosition();
 
+	//Enemyとplayerの差を計算する
+		XMFLOAT3 deltaPosition = XMFLOAT3(
+			TargetPosition_.x - EnemyTrans_.position_.x,
+			TargetPosition_.y - EnemyTrans_.position_.y,
+			TargetPosition_.z - EnemyTrans_.position_.z
+		);
+	
+	//Enemyの進行方向を計算する
+		XMVECTOR EnemyDir = XMVector3Normalize(XMLoadFloat3(&deltaPosition));
 
-	//レイキャスト(ビーム)を正面から飛ばす
-	StageObject* Wall = (StageObject*)FindObject("StageObject");
-	int WallModel = Wall->GetModelHandle(OBJ_WALL);
+	//Enemyの移動速度
+		float Speed = 0.05;
 
-	RayCastData Vision;
-	Vision.start = EnemyTrans_.position_;
-	Vision.dir = XMFLOAT3(0, 0, 0);//←ここにどこにレイを飛ばすか入れてやる
-	Model::RayCast(WallModel, &Vision);
+	//EnemyをTargetに向かって移動させる
+		EnemyTrans_.position_.x += (XMVectorGetX(EnemyDir) * Speed);
+		EnemyTrans_.position_.y += (XMVectorGetY(EnemyDir) * Speed);
+		EnemyTrans_.position_.z += (XMVectorGetZ(EnemyDir) * Speed);
 
-	//壁にぶつかったら右、左、後ろにレイを飛ばす
-	RayCastData DoM_Right; //進行方向（Direction of Movement）
-	RayCastData DoM_Left; //進行方向（Direction of Movement）
-	RayCastData DoM_Back; //進行方向（Direction of Movement）
+	//ベクトルの長さを求める
+		XMVECTOR vLength = XMVector3Length(EnemyDir);
+		float length = XMVectorGetX(vLength);
 
+		if (length != 0)//vMoveの長さが0じゃないとき(動いているとき)
+		{
+			XMVECTOR vFront = { 0,0,1,0 };//奥向きのベクトル
 
-	//Visionが当たったら
-	if (Vision.hit) {
-		//配列にするか検討中
-		DoM_Right.start = EnemyTrans_.position_;
-		DoM_Left.start = EnemyTrans_.position_;
-		DoM_Back.start = EnemyTrans_.position_;
-		DoM_Left.dir = XMFLOAT3(0, 0, 0);//左に飛ばす
-		DoM_Right.dir = XMFLOAT3(0, 0, 0);//右に飛ばす
-		DoM_Back.dir = XMFLOAT3(0, 0, 0);//後ろに飛ばす
-		Model::RayCast(WallModel, &DoM_Left);
-		Model::RayCast(WallModel, &DoM_Right);
-		Model::RayCast(WallModel, &DoM_Back);
+			XMVECTOR vDot = XMVector3Dot(vFront, EnemyDir);
+			//↑の二つのベクトルの内積を求める
+			float dot = XMVectorGetX(vDot);
+			float angle = acos(dot);//アークコサインで計算すると"狭い角度"のほうの角度を求める
 
-		bool DomRight;
-		bool DomLeft;
-		bool DomBack;
+			XMVECTOR vCross = XMVector3Cross(vFront, EnemyDir);
+			//↑二つのベクトルの外積を求める
+			//外積のYが０より小さかったら
+			if (XMVectorGetY(vCross) < 0) {
+				//angleに -1 をかける
+				angle *= -1;
+			}
 
-		//当たったら
-		if (DoM_Right.hit) {
-			//フラグ立ててこの方向の選択肢をfalseにする
-			DomRight = false;
+			EnemyTrans_.rotate_.y = XMConvertToDegrees(angle);
 		}
-		//当たったら
-		if (DoM_Left.hit) {
-			//フラグ立ててこの方向の選択肢をfalseにする
-			DomLeft = false;
-		}
-		//当たったら
-		if (DoM_Back.hit) {
-			//フラグ立ててこの方向の選択肢をfalseにする
-			DomBack = false;
-		}
-
-
-		
-
-		//進行方向を取得
-
-		//取得した方向に進む
-
-	}
-	else 
-	{
-
-	}
-
-	//当たらなかった方に回転し、進む
-	//もしどちらとも当たらなかったら、ランダムにして、右、左、後ろに進む
-	//playerに当たったら、playerの座標を取得してそこに向かう
-
-//───────────────────────────────────────
-//  キャラクターの接触処理
-//───────────────────────────────────────
-
-	//playerと接触したとき、playerをキルする
-	//この基準
 }
 
 //描画
@@ -111,14 +82,3 @@ void Enemy::Draw()
 void Enemy::Release()
 {
 }
-
-//１方向当たった時の処理
-		// 右だけ
-		// 左だけ
-		// 後ろだけ
-		//２方向当たった時の処理
-		// 右と左
-		// 右と後ろ
-		// 左と後ろ
-		//３方向当たった時の処理
-		// 右と左と後ろ

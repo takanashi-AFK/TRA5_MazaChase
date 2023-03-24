@@ -6,22 +6,33 @@ const int FPS = 60;
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject * parent)
-	: GameObject(parent, "PlayScene"),Time_(0),ReadyTimer_(0)
+	: GameObject(parent, "PlayScene"),Time_(0),ReadyTimer_(0),state_(0)
 {
 }
 
 //初期化
 void PlayScene::Initialize()
 {
+
+	Instantiate<Enemy>(this);
 	Instantiate<StageMap>(this);
 	Instantiate<Player>(this);
-	//Instantiate<Enemy>(this);
 
+	//タイマーの設定
 	Time_ = Instantiate<Timer>(this);
 	Time_->DrawPostion(30, 30);	//描画する位置を指定
-	Time_->UseThis(T_TIMER);//(State_)を使う
-	Time_->SetLimit(30);			//制限時間を設定(秒)
-	ReadyTimer_ = (5 * FPS);//(秒 * フレームレート)
+	Time_->UseThis(T_TIMER);	//(State_)を使う
+	Time_->SetLimit(30);		//制限時間を設定(秒)
+
+	//ミニマップの設定
+	#if 1
+	{
+		Map_ = Instantiate<MiniMap>(this);
+		Map_->DrawPosition(3, 13);
+		Map_->ChengeOpacity(190);
+		ReadyTimer_ = (3 * FPS);//(秒 * フレームレート)
+	}
+	#endif
 }
 
 //更新
@@ -52,21 +63,16 @@ void PlayScene::UpdateReady()
 //更新：プレイ中
 void PlayScene::UpdatePlay()
 {
-	//playerを動ける状態にする
-	Player* P = (Player*)FindObject("Player");
-	P->SetMove(true);
-
-	if (Time_->IsFinished()) {
-		//ステートパターンを変更する
-		state_ = S_GAMEOVER;
-	}
+	//if (Time_->IsFinished()) {
+	//	//ステートパターンを変更する
+	//	state_ = S_GAMEOVER;
+	//}
 }
 
 //更新：終了
 void PlayScene::UpdateClear()
 {
-	SceneManager* Clear = (SceneManager*)FindObject("SceneManager");
-	Clear->ChangeScene(SCENE_ID_CLEAR);
+
 }
 
 //描画

@@ -1,5 +1,6 @@
 #include "sceneManager.h"
 
+#include "../TitleScene.h"
 #include "../PlayScene.h"
 #include "../OverScene.h"
 #include "../ClearScene.h"
@@ -29,6 +30,8 @@ void SceneManager::Update()
 	//次のシーンが現在のシーンと違う　＝　シーンを切り替えなければならない
 	if (currentSceneID_ != nextSceneID_)
 	{
+		//トランジション
+
 		//そのシーンのオブジェクトを全削除
 		KillAllChildren();
 
@@ -40,6 +43,7 @@ void SceneManager::Update()
 		//次のシーンを作成
 		switch (nextSceneID_)
 		{
+		case SCENE_ID_TITLE:	Instantiate<TitleScene>(this); break;
 		case SCENE_ID_PLAY:		Instantiate<PlayScene>(this); break;
 		case SCENE_ID_GAMEOVER: Instantiate<OverScene>(this); break;
 		case SCENE_ID_CLEAR:	Instantiate<ClearScene>(this); break;

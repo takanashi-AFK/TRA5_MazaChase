@@ -31,4 +31,15 @@ public:
 	//ŠJ•ú
 	void Release() override;
 
+	//Table.size & data‚ğ‘¼Š‚É“n‚·ŠÖ”
+	vector<vector<int>>& GetTable_() { return(this->Table_);}
+	
+	//Table.Width‚ğ“n‚·ŠÖ”
+	int GetWidth() { return (this->Width); }
+
+	//Table.Height‚ğ“n‚·ŠÖ”
+	int GetHeight() { return (this->Height); }
+
+	//•Ç‚©‚Ç‚¤‚©‚ğŠm”F‚·‚éŠÖ”
+	bool isWall(int _x, int _z);
 };

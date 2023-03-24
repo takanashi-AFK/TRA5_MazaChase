@@ -1,20 +1,20 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/SceneManager.h"
+#include "Engine/Image.h"
 #include "Engine/Input.h"
-#include "Engine/Model.h"
 
-#include "StageObject.h"
-#include "Player.h"
 
-class Enemy : public GameObject
+class TitleScene : public GameObject
 {
-	int hModel_;			//モデル番号
-	Transform EnemyTrans_;	//enemyのtransformを格納する
-	XMFLOAT3 TargetPosition_;
+private:
+	int hPict_;
+	int Opacity_;
+	bool SceneMove_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	Enemy(GameObject* parent);
+	TitleScene(GameObject* parent);
 
 	//初期化
 	void Initialize() override;
@@ -28,3 +28,4 @@ public:
 	//開放
 	void Release() override;
 };
+

@@ -9,7 +9,7 @@ StageMap::StageMap(GameObject* parent)
 //───────────────────────────────────────
 	//CSVデータをロードする
 	//for (int i = 0; i < CSVMAX; i++){
-	CsvMap_.Load("Map.csv");
+	CsvMap_.Load("M_SW_Map1.csv");
 	//テーブルの配列の大きさを把握
 	Width = CsvMap_.GetWidth();//CSVの横幅を取得
 	Height = CsvMap_.GetHeight();//CSVの縦幅を取得
@@ -53,6 +53,12 @@ void StageMap::Draw()
 void StageMap::Release()
 {
 	
+}
+
+//壁かどうかを確認する関数
+bool StageMap::isWall(int _x, int _z)
+{
+	return(Table_[_x/2][_z/2] == OBJ_WALL);
 }
 
 /*

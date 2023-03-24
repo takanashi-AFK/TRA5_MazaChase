@@ -43,9 +43,3 @@ void StageObject::ObjectSet(int _obj)
 {
 	obj_ = _obj;
 }
-
-//任意のゲームオブジェクトに「何メートル先でぶつかるか」を求める関数
-int StageObject::GetModelHandle(int _obj)
-{
-	return (hModel_[_obj]);
-}

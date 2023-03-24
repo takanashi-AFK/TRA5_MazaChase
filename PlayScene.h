@@ -3,11 +3,14 @@
 #include "Engine/Input.h"
 #include "Engine/Camera.h"
 #include "Engine/SceneManager.h"
+#include "Engine/Image.h"
 
 #include "Player.h"
 #include "Enemy.h"
 #include "StageMap.h"
 #include "Timer.h"
+#include "MiniMap.h"
+
 
 class PlayScene : public GameObject
 {
@@ -22,6 +25,7 @@ public:
 
 private:
 	Timer* Time_;
+	MiniMap* Map_;
 	int ReadyTimer_;
 
 public:
