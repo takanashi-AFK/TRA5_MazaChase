@@ -14,11 +14,13 @@ void Enemy::Initialize()
 
 	//初期位置の設定
 	{
-		EnemyTrans_.position_ = { 10.0f,0.0f,13.0f };
+		EnemyTrans_.position_ = { 3.0f,0.0f,3.0f };
 		EnemyTrans_.scale_ = { 0.8f,0.8f,0.8f };
 		EnemyTrans_.rotate_.y = 0;
 		Model::SetAnimFrame(hModel_, 0, 60, 1);
 	}
+
+    pStageMap = (StageMap*)FindObject("StageMap");
 }
 
 //更新
@@ -69,6 +71,79 @@ void Enemy::Update()
 
 			EnemyTrans_.rotate_.y = XMConvertToDegrees(angle);
 		}
+
+        //あたり判定の各頂点を構成する要素
+        int checkX1, checkZ1;
+        int checkX2, checkZ2;
+
+        //あたり判定の各処理
+        #if 0
+        {
+            //右側の判定
+            {
+                //頂点１を構成
+                checkX1 = (int)(EnemyTrans_.position_.x + 0.2f);
+                checkZ1 = (int)(EnemyTrans_.position_.z + 0.1f);
+
+                //頂点２を構成
+                checkX2 = (int)(EnemyTrans_.position_.x + 0.2f);
+                checkZ2 = (int)(EnemyTrans_.position_.z - 0.1f);
+
+                //頂点１,２が壁かどうかを判定する
+                if (pStageMap->isWall(checkX1, checkZ1) || pStageMap->isWall(checkX2, checkZ2)) {
+                    EnemyTrans_.position_.x = (float)((int)EnemyTrans_.position_.x) + (1.0f - 0.2f);
+                }
+            }
+
+            //左側の判定
+            {
+                //頂点１を構成
+                checkX1 = (int)(EnemyTrans_.position_.x - 0.2f);
+                checkZ1 = (int)(EnemyTrans_.position_.z + 0.1f);
+
+                //頂点２を構成
+                checkX2 = (int)(EnemyTrans_.position_.x - 0.2f);
+                checkZ2 = (int)(EnemyTrans_.position_.z - 0.1f);
+
+                //そこが壁かどうかを判定する
+                if (pStageMap->isWall(checkX1, checkZ1) || pStageMap->isWall(checkX2, checkZ2)) {
+                    EnemyTrans_.position_.x = (float)((int)EnemyTrans_.position_.x) + 0.2f;
+                }
+            }
+
+            //奥側の判定
+            {
+                //頂点１を構成
+                checkX1 = (int)(EnemyTrans_.position_.x + 0.1f);
+                checkZ1 = (int)(EnemyTrans_.position_.z + 0.2f);
+
+                //頂点２を構成
+                checkX2 = (int)(EnemyTrans_.position_.x - 0.1f);
+                checkZ2 = (int)(EnemyTrans_.position_.z + 0.2f);
+
+                //そこが壁かどうかを判定する
+                if (pStageMap->isWall(checkX1, checkZ1) || pStageMap->isWall(checkX2, checkZ2)) {
+                    EnemyTrans_.position_.z = (float)((int)EnemyTrans_.position_.z) + (1.0f - 0.2f);
+                }
+            }
+
+            //前側の判定
+            {
+                //頂点１を構成
+                checkX1 = (int)(EnemyTrans_.position_.x + 0.1f);
+                checkZ1 = (int)(EnemyTrans_.position_.z - 0.2f);
+
+                //頂点２を構成
+                checkX2 = (int)(EnemyTrans_.position_.x - 0.1f);
+                checkZ2 = (int)(EnemyTrans_.position_.z - 0.2f);
+
+                //そこが壁かどうかを判定する
+                if (pStageMap->isWall(checkX1, checkZ1) || pStageMap->isWall(checkX2, checkZ2)) {
+                    EnemyTrans_.position_.z = (float)((int)EnemyTrans_.position_.z) + 0.2f;
+                }
+            }
+        }
+        #endif
 }
 
 //描画

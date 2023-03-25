@@ -3,7 +3,7 @@
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 
-#include "StageObject.h"
+#include "StageMap.h"
 #include "Player.h"
 
 class Enemy : public GameObject
@@ -11,6 +11,8 @@ class Enemy : public GameObject
 	int hModel_;			//モデル番号
 	Transform EnemyTrans_;	//enemyのtransformを格納する
 	XMFLOAT3 TargetPosition_;
+
+	StageMap* pStageMap;	//ポインタ変数
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
