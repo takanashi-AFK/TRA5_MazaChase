@@ -126,7 +126,7 @@ void Player::Update()
     int checkX2, checkZ2;
 
     //‚ ‚½‚è”»’è‚ÌŠeˆ—
-    #if 0
+    #if 1
     {
         //‰E‘¤‚Ì”»’è
         {

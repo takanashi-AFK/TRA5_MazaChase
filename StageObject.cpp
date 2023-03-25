@@ -19,6 +19,7 @@ void StageObject::Initialize()
 		assert(hModel_[i] >= 0);
 	}
 	//transform_.scale_ = { 2,2,2 };
+	transform_.rotate_.y = 180;
 }
 
 //XV
