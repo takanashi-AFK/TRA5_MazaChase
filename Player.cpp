@@ -111,7 +111,7 @@ void Player::Update()
 
     //デバック用
     //Player(中心)が壁と接触しているかを確認する
-    #if 0
+    #if 1
     {
         if (pStageMap->isWall(PlayerTrans_.position_.x, PlayerTrans_.position_.z)){
             Debug::Log("〇",true);}
@@ -126,7 +126,7 @@ void Player::Update()
     int checkX2, checkZ2;
 
     //あたり判定の各処理
-    #if 1
+    #if 0
     {
         //右側の判定
         {

@@ -14,18 +14,23 @@ PlayScene::PlayScene(GameObject * parent)
 void PlayScene::Initialize()
 {
 
-	Instantiate<Enemy>(this);
+	//Instantiate<Enemy>(this);
 	Instantiate<StageMap>(this);
 	Instantiate<Player>(this);
 
 	//タイマーの設定
-	Time_ = Instantiate<Timer>(this);
-	Time_->DrawPostion(30, 30);	//描画する位置を指定
-	Time_->UseThis(T_TIMER);	//(State_)を使う
-	Time_->SetLimit(30);		//制限時間を設定(秒)
+	#if 0
+	{
+		
+		Time_ = Instantiate<Timer>(this);
+		Time_->DrawPostion(30, 30);	//描画する位置を指定
+		Time_->UseThis(T_TIMER);	//(State_)を使う
+		Time_->SetLimit(30);//制限時間を設定(秒)
+	}	
+	#endif
 
 	//ミニマップの設定
-	#if 1
+	#if 0
 	{
 		Map_ = Instantiate<MiniMap>(this);
 		Map_->DrawPosition(3, 13);
